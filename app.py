@@ -12,6 +12,7 @@ from src.ui_components import header, inject_css, result_card, status_badge
 st.set_page_config(page_title="AI Image Classification", page_icon="🧠", layout="wide")
 inject_css()
 header()
+st.caption("Model CIFAR-10 mengenali 10 kelas: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, dan truck.")
 
 try:
     config = load_config()

@@ -1,9 +1,23 @@
 {
   "model_path": "models/model.keras",
-  "image_size": [224, 224],
+  "image_size": [
+    32,
+    32
+  ],
   "color_mode": "rgb",
-  "preprocessing": "rescale_0_1",
-  "class_names": ["Class A", "Class B"],
+  "preprocessing": "none",
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
   "output_type": "multiclass_softmax",
   "max_upload_mb": 10
 }

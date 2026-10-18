@@ -1,6 +1,6 @@
 # AI Image Classification
 
-Aplikasi web Streamlit untuk mengklasifikasikan gambar menggunakan model CNN hasil pelatihan kelompok. Repository ini menyediakan antarmuka dan integrasi inferensi; tidak melakukan training dan tidak menyertakan model contoh. Tanpa file model, aplikasi tetap terbuka dengan status **Model Not Available**.
+Aplikasi web Streamlit untuk mengklasifikasikan gambar menggunakan model CNN hasil pelatihan kelompok. Skrip training CIFAR-10 ada di `../training/optimasi_model.py`. Tanpa file model hasil training, aplikasi tetap terbuka dengan status **Model Not Available**.
 
 ## Teknologi
 
@@ -67,7 +67,7 @@ Buka alamat lokal yang ditampilkan Streamlit. File JPG, JPEG, dan PNG dapat diun
    - `max_upload_mb`: batas file aplikasi, maksimal 10 kecuali batas server juga diubah.
 3. Muat ulang halaman. Status **Ready** berarti file tersedia; model dimuat ketika tombol **Analyze Image** ditekan. Jika format, dimensi, atau output tidak cocok, aplikasi menampilkan pesan kesalahan.
 
-Konfigurasi bawaan hanya template. Jangan memakai nama kelas atau preprocessing bawaan sebelum mencocokkannya dengan model kelompok. Output yang berupa *logits* tidak didukung oleh konfigurasi saat ini: minta pembuat model menyediakan output softmax/sigmoid, atau ubah kontrak inferensi secara sadar. Aplikasi tidak menambahkan softmax ke output model dan tidak membuat prediksi acak.
+Konfigurasi saat ini sesuai dengan model yang diekspor oleh `../training/optimasi_model.py`: CIFAR-10, RGB 32×32, sepuluh kelas, dan normalisasi di dalam model. Bila memakai model lain, cocokkan kembali seluruh kontrak. Output yang berupa *logits* tidak didukung oleh konfigurasi saat ini: model harus menghasilkan softmax/sigmoid. Aplikasi tidak menambahkan softmax ke output model dan tidak membuat prediksi acak.
 
 ## Menguji prediksi
 
@@ -80,8 +80,8 @@ Waktu inferensi diukur hanya untuk `model.predict`, tanpa waktu memuat model dan
 
 ## Deployment ke Streamlit Community Cloud
 
-1. Simpan proyek di repository GitHub. File model dikecualikan oleh `.gitignore`; jika deployment memerlukan model, unggah file model kelompok melalui cara distribusi yang disetujui dan pastikan tersedia di path `model_path` pada runtime. Untuk model kecil, Anda dapat melacaknya di repository dengan `git add -f models/model.keras`, jika hak distribusinya mengizinkan.
-2. Di Streamlit Community Cloud, pilih repository, branch, dan entrypoint `image-classification/web-app/app.py`. Jika repository hanya berisi folder `web-app`, gunakan `app.py`.
+1. Jalankan skrip training terlebih dahulu. Simpan proyek di repository GitHub. Model hasil training berukuran sekitar 7 MB dan berada di `models/model.keras`; sertakan file tersebut saat commit dan push agar deployment dapat memprediksi. Pastikan model tersedia di path `model_path` pada runtime.
+2. Di Streamlit Community Cloud, pilih repository dan branch. Repository `cnn-image-classifier` saat ini berakar di folder `web-app`, jadi gunakan entrypoint `app.py`.
 3. Pastikan runtime memakai Python 3.11 dan memasang `requirements.txt` proyek. Atur working directory/entrypoint sesuai letak folder proyek.
 4. Periksa log build terutama jika paket TensorFlow atau ukuran model melebihi batas resource layanan. Setelah deploy, uji upload dan prediksi dengan gambar berlabel.
 
