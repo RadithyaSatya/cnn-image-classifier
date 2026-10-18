@@ -1,0 +1,9 @@
+{
+  "model_path": "models/model.keras",
+  "image_size": [224, 224],
+  "color_mode": "rgb",
+  "preprocessing": "rescale_0_1",
+  "class_names": ["Class A", "Class B"],
+  "output_type": "multiclass_softmax",
+  "max_upload_mb": 10
+}
